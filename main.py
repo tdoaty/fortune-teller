@@ -28,7 +28,7 @@ class CountHandler(webapp2.RequestHandler):
 class FortuneHandler(webapp2.RequestHandler):
     def get(self):
         fortunes = ['You will win the lottery', 'You will be a CSSI Fellow', 'You will meet you meet your favorite celebrity']
-        self.response.write(fortunes[random.randrange(0,2)])
+        self.response.write(fortunes[random.randrange(0,len(fortunes)-1)])
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
