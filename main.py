@@ -31,13 +31,21 @@ class MainHandler(webapp2.RequestHandler):
 
 class CountHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('I am the CountHandler')
+        count_template = JINJA_ENVIRONMENT.get_template("Templates/number.html")
+        users_fav_num = 27
+        self.response.write(count_template.render(
+        {"user_number": users_fav_num}
+        ))
 
 class FortuneHandler(webapp2.RequestHandler):
     def get(self):
+        user_name = "Taylor"
+        user_location = "Pittsburgh, PA"
         fortune_page = JINJA_ENVIRONMENT.get_template("Templates/fortune.html")
         fortunes = ['You will win the lottery', 'You will be a CSSI Fellow', 'You will meet you meet your favorite celebrity']
-        self.response.write(fortune_page.render())
+        self.response.write(fortune_page.render(
+        {"name": user_name, "location": user_location}
+        ))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
