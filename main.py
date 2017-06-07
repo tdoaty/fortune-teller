@@ -16,6 +16,14 @@
 #
 import webapp2
 import random
+import jinja2
+import os
+
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -27,8 +35,9 @@ class CountHandler(webapp2.RequestHandler):
 
 class FortuneHandler(webapp2.RequestHandler):
     def get(self):
+        fortune_page = JINJA_ENVIRONMENT.get_template("Templates/fortune.html")
         fortunes = ['You will win the lottery', 'You will be a CSSI Fellow', 'You will meet you meet your favorite celebrity']
-        self.response.write(fortunes[random.randrange(0,len(fortunes)-1)])
+        self.response.write(fortune_page.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
